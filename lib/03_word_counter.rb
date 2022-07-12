@@ -1,6 +1,5 @@
-# local_dir = File.expand_path('../', shakespeare.txt)
-# $LOAD_PATH.unshift(local_dir)
-require "./shakespeare.txt"
+file = File.open("shakespeare.txt")
+file_data = file.read
 
 def word_counter(corpus, dictionnary)
   final_hash = Hash.new(0)
@@ -25,12 +24,12 @@ def word_counter_text(corpus, dictionnary)
   final_hash = Hash.new(0)
   dictionnary.each {|word| final_hash[word] = 0}
   corpus_by_word = corpus.split
-  corpus_by_word.each {|word| final_hash[word] += 1 if is_part_of_dictionnary?(word, dictionnary)}
+  corpus_by_word.each {|word| final_hash[word.downcase] += 1 if is_part_of_dictionnary?(word, dictionnary)}
   final_hash
 end
 
 dict = ["below", "down", "go", "going", "horn", "how", "howdy", "it", "i", "low", "own", "part", "partner", "sit"]
 dict_shak = ["the", "of", "and", "to", "a", "in", "for", "is", "on", "that", "by", "this", "with", "i", "you", "it", "not", "or", "be", "are"]
 # puts word_counter("Howdy partner, sit down! How's it going?", dict)
-# puts word_counter_text(shakespeare_text, dict_shak)
+puts word_counter_text(file_data, dict_shak)
 # puts word_counter_text("I'm down below, going home. How have you been partner?", dict)
